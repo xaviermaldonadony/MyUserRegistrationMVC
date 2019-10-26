@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.profile.model.Login;
 
@@ -33,13 +32,13 @@ public class UserRegistrationController {
   }
   
   
-  @RequestMapping(value = "saveUserCredential", method = RequestMethod.POST)
-  public ModelAndView saveUserCredential(@Valid @ModelAttribute("userCredentialFormObj") Login login, BindingResult br, @RequestParam("email") String email, @RequestParam("confPassword") String confPassword, RedirectAttributes redirect) {
+  @RequestMapping(value = "processUserCredential", method = RequestMethod.POST)
+  public ModelAndView processUserCredential(@Valid @ModelAttribute("userCredentialFormObj") Login login, BindingResult br, @RequestParam("confPassword") String confPassword) {
 
     ModelAndView mav = null;
     Login credential = new Login();
 
-    System.out.println("in sveUserCredential method");
+    
     if(br.hasErrors()) {
       System.out.println("error in user reg cont " +
     login.toString());
@@ -50,9 +49,7 @@ public class UserRegistrationController {
     else {
       if(login.getPassword().equals(confPassword)) {
         
-//        credential = new Login(login.getName(), login.getEmail(), login.getPassword(), new Date());
         credential = new Login(login.getName(), login.getEmail(), login.getPassword());
-
         userMap.put(credential.getEmail(), credential);
 
         System.out.println("login credential " + login.toString());

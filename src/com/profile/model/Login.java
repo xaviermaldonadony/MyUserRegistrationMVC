@@ -36,29 +36,28 @@ public class Login {
 //	@NotNull
 	private String user;
 	
-	@Past
-	@NotEmpty
-	@Column(name = "USER_DOB")
-	private Date dateofBirth;
+//	@Past
+//	@NotEmpty
+//	private Date dateofBirth;
 
 	public Login() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Login(String name, String email, String password, Date dateOfBirth) {
-		this.id = count++;
-	  this.name = name;
-	  this.email = email;
-		this.password = password;
-		this.dateofBirth = dateOfBirth;
-	}
+//	public Login(String name, String email, String password, Date dateOfBirth) {
+//		this.id = count++;
+//	  this.name = name;
+//	  this.email = email;
+//		this.password = password;
+////		this.dateofBirth = dateOfBirth;
+//	}
 	
-//	 public Login(String name, String email, String password) {
-//	    this.id = count++;
-//	    this.name = name;
-//	    this.email = email;
-//	    this.password = password;
-//	  }
+	 public Login(String name, String email, String password) {
+	    this.id = count++;
+	    this.name = name;
+	    this.email = email;
+	    this.password = password;
+	  }
 
 	public String getName() {
 		return name;
@@ -99,13 +98,13 @@ public class Login {
 	    this.user = user;
 	  }
 
-	  public void setDateOfBirth(Date dateOfBirth) {
-	    this.dateofBirth = dateOfBirth;
-	  }
-	  
-	  public Date getDateOfBirth(){
-	    return this.dateofBirth;
-	  }
+//	  public void setDateOfBirth(Date dateOfBirth) {
+//	    this.dateofBirth = dateOfBirth;
+//	  }
+//	  
+//	  public Date getDateOfBirth(){
+//	    return this.dateofBirth;
+//	  }
   @Override
   public String toString() {
     return "Login [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", user=" + user
