@@ -16,9 +16,9 @@
 
     <c:forEach items="${userListBean}" var="loginEntry">
         <tr>
-            <td><a href="${pageContext.request.contextPath}/users/${loginEntry.value.email}/">${loginEntry.value.id}</a>
+            <td><a href="${pageContext.request.contextPath}/users/${loginEntry.email}/">${loginEntry.id}</a>
             </td>
-            <td>${loginEntry.value.name}</td>
+            <td>${loginEntry.name}</td>
         </tr>
     </c:forEach>
 </table>
