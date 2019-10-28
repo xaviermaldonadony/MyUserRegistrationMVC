@@ -1,82 +1,117 @@
 package com.profile.model;
 
-import java.util.Date;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-
-import org.hibernate.annotations.CreationTimestamp;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 public class User {
+
     @NotEmpty
     private long id;
+
     @NotEmpty
     private String firstName;
+
     @NotEmpty
     private String lastName;
+
     @NotEmpty
     private String email;
-    
-    @Past(message = "Date of Birth can not be in future")
-    private Date dateofBirth;
-    @CreationTimestamp
-    private Date memberSince;
+
+    @Past(message = "Date of Birth cannot be in the future")
+    @NotEmpty
+    private Date dateOfBirth;
+
+    @CreationTimestamp //Hibernate Annotation
+    private Date joinedSince;
+
     @Valid
     @NotNull
     private Address address;
-    @Pattern(regexp = "\\d{10}")
+
+    @Pattern(regexp = "\\d{10}") //regex expects 10 digits
     @NotEmpty
     private String phone;
-    
-    
+
+    @CreditCardNumber
+    @NotEmpty
+    private String cc;
+
     public long getId() {
-      return id;
+        return id;
     }
+
     public void setId(long id) {
-      this.id = id;
+        this.id = id;
     }
+
     public String getFirstName() {
-      return firstName;
+        return firstName;
     }
+
     public void setFirstName(String firstName) {
-      this.firstName = firstName;
+        this.firstName = firstName;
     }
+
     public String getLastName() {
-      return lastName;
+        return lastName;
     }
+
     public void setLastName(String lastName) {
-      this.lastName = lastName;
+        this.lastName = lastName;
     }
+
     public String getEmail() {
-      return email;
+        return email;
     }
+
     public void setEmail(String email) {
-      this.email = email;
+        this.email = email;
     }
-    public Date getDateofBirth() {
-      return dateofBirth;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
-    public void setDateofBirth(Date dateofBirth) {
-      this.dateofBirth = dateofBirth;
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
-    public Date getMemberSince() {
-      return memberSince;
+
+    public Date getJoinedSince() {
+        return joinedSince;
     }
-    public void setMemeberSince(Date memberSince) {
-      this.memberSince = memberSince;
+
+    public void setJoinedSince(Date joinedSince) {
+        this.joinedSince = joinedSince;
     }
+
     public Address getAddress() {
-      return address;
+        return address;
     }
+
     public void setAddress(Address address) {
-      this.address = address;
+        this.address = address;
     }
+
     public String getPhone() {
-      return phone;
+        return phone;
     }
+
     public void setPhone(String phone) {
-      this.phone = phone;
+        this.phone = phone;
     }
-    
-    
+
+    public String getCc() {
+        return cc;
+    }
+
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
 }

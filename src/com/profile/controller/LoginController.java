@@ -1,10 +1,8 @@
 package com.profile.controller;
 
-import java.util.*;
-import java.util.Map.Entry;
-
-import javax.validation.Valid;
-
+import com.profile.model.Login;
+import com.profile.service.loginService.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,67 +10,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.profile.model.Login;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
 
-	public static Map<String, Login> loginList;
+    @Autowired
+    LoginService loginService;
 
-	public LoginController() {
-		// TODO Auto-generated constructor stub
-		loginList = new HashMap<String, Login>();
-//		loginList.put("max", new Login("max", "max@aol.com","123456", new Date()));
-//		loginList.put("lucy", new Login("lucy", "lucy@aol.com","123456",new Date()));
-		
-  loginList.put("max", new Login("max", "max@aol.com","123456"));
-  loginList.put("lucy", new Login("lucy", "lucy@aol.com","123456"));
-		
-	}
+    Map<String, Login> loginList;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView getLoginForm() {
-		ModelAndView mav = new ModelAndView("loginForm");
-		// refers to the model attribute within the loginForm.jsp
-		mav.addObject("loginForm", new Login());
-		return mav;
-	}
+    public Map<String, Login> getLoginList() {
+        return loginList;
+    }
 
-	// loginProcess refers to the action within the form
-	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-	public ModelAndView loginProcess(@Valid @ModelAttribute("loginForm") Login login, BindingResult binding) {
-//		if (binding.hasErrors()) {
-//			ModelAndView mv = new ModelAndView("violation");
-//			mv.addObject("message", "There were data violation");
-//			return mv;
-//		}
-	  
-//	  loginList.forEach((k,v) -> System.out.println("Key = "
-//        + k + ", Value = " + v));
-		ModelAndView mav = null;
+    public void setLoginList(Map<String, Login> loginList) {
+        this.loginList = loginList;
+    }
 
-		if (!binding.hasErrors() || binding.getRawFieldValue("name") == null) {
-			String usernameForm = login.getEmail();
-			String passwordForm = login.getPassword();
-			Login exists = UserRegistrationController.userMap.get(usernameForm);
-			
-			if (exists != null && passwordForm.equals(exists.getPassword())) {
-				mav = new ModelAndView("welcome");
-				mav.addObject("name", login.getName());
-			} else {
-				mav = new ModelAndView("loginForm");
-				mav.addObject("message", "Username or Password is wrong!");
-			}
-			return mav;
-		} else {
+    public LoginController() {
+        loginList = new HashMap<>();
+    }
 
-			mav = new ModelAndView("loginForm");
-			mav.addObject("message", "Constraint Violation!");
-			return mav;
-		}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView getLoginForm() {
+        ModelAndView mav = new ModelAndView("loginForm");
+        // refers to the model attribute within the loginForm.jsp
+        mav.addObject("loginForm", new Login());
+        return mav;
+    }
 
-	}
-	public static Map<String, Login> getLoginList() {
-	  return loginList;
-	}
+    // loginProcess refers to the action within the form
+    @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
+    public ModelAndView loginProcess(@Valid @ModelAttribute("loginForm") Login login, BindingResult binding) {
+
+        System.out.println("From parameter login -> " + login.toString());
+        ModelAndView mav = null;
+        if (!binding.hasErrors() || binding.getRawFieldValue("name") == null) {
+            System.out.println(login.toString());
+            String emailForm = login.getEmail();
+            String passwordForm = login.getPassword();
+            Login exists = loginService.getLoginByEmail(emailForm);
+            if (exists != null && passwordForm.equals(exists.getPassword())) {
+                mav = new ModelAndView("welcome");
+                mav.addObject("name", exists.getName());
+            } else {
+                mav = new ModelAndView("loginForm");
+                mav.addObject("message", "Username or Password is wrong!");
+            }
+            return mav;
+        } else {
+            binding.getAllErrors().forEach(System.out::println);
+            System.out.println(login.toString());
+            mav = new ModelAndView("loginForm");
+            mav.addObject("message", "Constraint Violation!");
+            return mav;
+        }
+    }
 }

@@ -1,52 +1,25 @@
 package com.profile.model;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class Address {
-  @NotEmpty
-  private long id;
-  @NotEmpty
-  private String streetAddress;
-  @NotEmpty
-  @Pattern(regexp = "\\d{5}")
-  private String zipCode;
-  @NotEmpty
-  private String city;
-  @NotEmpty
-  @Pattern(regexp = "[A-Z] {2}")
-  private String state;
-  
-  
-  public long getId() {
-    return id;
-  }
-  public void setId(long id) {
-    this.id = id;
-  }
-  public String getStreetAddress() {
-    return streetAddress;
-  }
-  public void setStreetAddress(String streetAddress) {
-    this.streetAddress = streetAddress;
-  }
-  public String getZipCode() {
-    return zipCode;
-  }
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
-  }
-  public String getCity() {
-    return city;
-  }
-  public void setCity(String city) {
-    this.city = city;
-  }
-  public String getState() {
-    return state;
-  }
-  public void setState(String state) {
-    this.state = state;
-  }
-  
-  
+
+    @NotEmpty
+    private long id;
+
+    @NotEmpty
+    private String street;
+
+    @NotEmpty
+    private String zipCode;
+
+    @NotEmpty
+    private String city;
+
+    @NotEmpty
+    @Pattern(regexp = "[A-Z]{2}") //expects 2 uppercase alphabet characters
+    private String state;
+
+
 }
